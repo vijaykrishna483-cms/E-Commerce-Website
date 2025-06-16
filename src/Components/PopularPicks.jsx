@@ -1,14 +1,13 @@
 import React from 'react';
 import { FaStar } from 'react-icons/fa';
+import Card from './card/Card';
 
 const PopularPicks = () => {
   const products = [
-    { img: '/card1.png', name: 'Item', price: '299/-', rating: 4 },
-    { img: '/card1.png', name: 'Item', price: '299/-', rating: 4 },
-    { img: '/card1.png', name: 'Item', price: '299/-', rating: 4 },
-    { img: '/card1.png', name: 'Item', price: '299/-', rating: 4 },
-    { img: '/card1.png', name: 'Item', price: '299/-', rating: 4 },
-    { img: '/card1.png', name: 'Item', price: '299/-', rating: 4 },
+    { img: '/demo.png', name: 'Item', price: '299/-', stars: 4 },
+    { img: '/demo.png', name: 'Item', price: '299/-', stars: 4 },
+    { img: '/demo.png', name: 'Item', price: '299/-', stars: 4 },
+
   ];
 
   return (
@@ -21,33 +20,17 @@ const PopularPicks = () => {
       </p>
 
       {/* Wrap grid + poster */}
-      <div className="flex flex-col lg:flex-row items-center justify-center gap-8 w-full">
+      <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:w-[100vw]">
         {/* Card grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4">
           {products.map((p, i) => (
-            <div
-              key={i}
-              className="bg-white w-full max-w-[220px] rounded-tr-3xl rounded-bl-3xl overflow-hidden shadow-md"
-            >
-              <img
-                src={p.img}
-                alt={p.name}
-                className="w-full h-[100px] object-cover"
-              />
-              <div className="p-3">
-                <div className="flex justify-between items-center">
-                  <h2 className="text-base sm:text-lg font-semibold">{p.name}</h2>
-                  <p className="text-base sm:text-lg font-semibold">{p.price}</p>
-                </div>
-                <div className="flex text-yellow-400 mt-1 text-sm">
-                  {Array(p.rating)
-                    .fill()
-                    .map((_, idx) => (
-                      <FaStar key={idx} />
-                    ))}
-                </div>
-              </div>
-            </div>
+           <Card
+           key={i}
+        name={p.name}
+        image={p.img}
+        stars={p.stars}
+        price={p.price} 
+           />
           ))}
         </div>
 

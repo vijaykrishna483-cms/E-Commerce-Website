@@ -1,175 +1,63 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import ShoppingCard from '../Components/ShoppingCard';
-import Footer from '../Components/Footer';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { categories, productsByCategory } from '../data/categories';
+import Card from '../Components/card/Card';
 import Navbar from '../Components/Navbar';
 
+ const ShopSection = () => {
+  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
 
-const products = [
-  {
-    id: '1',
-    title: 'Mango Juice',
-    price: 138,
-    image: 'https://i.pinimg.com/736x/29/ab/9d/29ab9d63ca2dc983ca359f8e93d71965.jpg',
-    weight: '250gms',
-    sold: 15,
-  },  {
-    id: '2',
-    title: 'Strawberry Juice',
-    price: 138,
-    image: 'https://i.pinimg.com/736x/fe/6f/ff/fe6fffe3c3ae4bf69904a71cfa184e9d.jpg',
-    weight: '250gms',
-    sold: 15,
-  },  {
-    id: '3',
-    title: 'Berry Juice',
-    price: 138,
-    image: 'https://i.pinimg.com/736x/4d/d0/33/4dd0335cb31a34f5920edb747b0c66ca.jpg',
-    weight: '250gms',
-    sold: 15,
-  },  {
-    id: '4',
-    title: 'Guava Juice',
-    price: 138,
-    image: 'https://i.pinimg.com/736x/cc/f2/a8/ccf2a8e3be7d3ebfa4084144faf0b394.jpg',
-    weight: '250gms',
-    sold: 15,
-  },
-
-];
-
-
-const products2 = [
-  {
-    id: '1',
-    title: 'Mango Juice',
-    price: 138,
-    image: 'https://i.pinimg.com/736x/29/ab/9d/29ab9d63ca2dc983ca359f8e93d71965.jpg',
-    weight: '250gms',
-    sold: 15,
-  },  {
-    id: '2',
-    title: 'Strawberry Juice',
-    price: 138,
-    image: 'https://i.pinimg.com/736x/4d/d0/33/4dd0335cb31a34f5920edb747b0c66ca.jpg',
-    weight: '250gms',
-    sold: 15,
-  },  {
-    id: '3',
-    title: 'Berry Juice',
-    price: 138,
-    image: 'https://i.pinimg.com/736x/29/ab/9d/29ab9d63ca2dc983ca359f8e93d71965.jpg',
-    weight: '250gms',
-    sold: 15,
-  },  {
-    id: '4',
-    title: 'Guava Juice',
-    price: 138,
-    image: 'https://i.pinimg.com/736x/4d/d0/33/4dd0335cb31a34f5920edb747b0c66ca.jpg',
-    weight: '250gms',
-    sold: 15,
-  },
-  // Add more products if needed
-];
-
-
-
-
-const ShopSection = () => {
-    const navigate = useNavigate();
-
-  const handleAddToCart = (product) => {
-    navigate(`/cart/${product.id}`, { state: product }); // send product info
-  };
   return (
-    <>
-    <Navbar/>    <section className="bg-white py-[16vh] px-4 sm:px-8 md:px-12  lg:px-[8vw] text-center">
-      {/* Breadcrumb */}
-      <div className="py-4 text-sm text-gray-500 text-left">
-        <Link to="/" className="hover:underline">Home</Link>
-        <span className="mx-2">•</span>
-        <span className="text-black font-medium">Shop</span>
+    <div className='flex flex-col bg-[#fff0] '>
+  
+      <div  className=' bg-[#fff0]'>
+ <Navbar/>
       </div>
+    <div className="flex ">
+      {/* Fixed Sidebar */}
+    
+     
+      <aside className="w-64 fixed h-screen font-light text-white pt-[13vh]  bg-[#b96e8f] p-4">
+        <h2 className="text-xl font-normal mb-4">Categories</h2>
+        <ul className="space-y-2">
+          {categories.map(category => (
+            <li key={category}>
+              <button
+                className={`w-full text-left p-2 rounded ${
+                  selectedCategory === category 
+                    ? 'bg-[#c8a2c8] text-white'
+                    : 'hover:bg-[#c8a2c8]'
+                }`}
+                onClick={() => setSelectedCategory(category)}
+              >
+                {category}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </aside>
 
-      {/* Main Heading */}
-      <h1 className="text-3xl md:text-4xl font-semibold text-black mb-10">Explore Our Collection</h1>
-
-      {/* Category 1 */}
-      <div className="mb-16 text-left">
-        <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-6 border-b pb-2">Category 1</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-         
-            {products.map((product) => (  
-
-
-          <ShoppingCard
-            key={product.id}
-            title={product.title}
-            image={product.image}
-            price={product.price}
-            onAddToCart={() => handleAddToCart(product)}
-          />
-        ))}
-      </div>
+      {/* Main Content */}
+      <main className="ml-64 p-8 flex-1 bg-[#c8a2c8] pt-[13vh] min-h-screen">
+        <h1 className="text-3xl font-light mb-6">{selectedCategory}</h1>
+        
+        <div className="grid grid-cols-1 font-light md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {productsByCategory[selectedCategory].map(product => (
+            <Card
+              key={product.id}
+              name={product.name}
+              price={product.price}
+              image={product.img}
+              stars={product.stars}
+            />
+          ))}
+        </div>
+      </main>
     </div>
-
-      {/* Category 2 */}
-      <div className="text-left">
-        <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-8 border-b pb-2">Category 2</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    {products2.map((product) => (  
-
-
-          <ShoppingCard
-            key={product.id}
-            title={product.title}
-            image={product.image}
-            price={product.price}
-            onAddToCart={() => handleAddToCart(product)}
-          />
-        ))}
-        </div>
       </div>
-
-        <div className="text-left mt-8">
-        <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-6 border-b pb-2">Category 3</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    {products.map((product) => (  
-
-
-          <ShoppingCard
-            key={product.id}
-            title={product.title}
-            image={product.image}
-            price={product.price}
-            onAddToCart={() => handleAddToCart(product)}
-          />
-        ))}
-        </div>
-      </div>
-
-        <div className="text-left mt-8">
-        <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-6 border-b pb-2">Category 4</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    {products2.map((product) => (  
-
-
-          <ShoppingCard
-            key={product.id}
-            title={product.title}
-            image={product.image}
-            price={product.price}
-            onAddToCart={() => handleAddToCart(product)}
-          />
-        ))}
-        </div>
-      </div>
-
-
-    </section>
-<Footer/>
-    </>
   );
 };
 
-export default ShopSection;
+
+export default ShopSection
+

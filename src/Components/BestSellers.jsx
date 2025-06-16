@@ -3,7 +3,7 @@ import { FaStar } from 'react-icons/fa';
 const BestSellers = () => {
   return (
     <div  className='h-full bg-[#c8a2c8] flex flex-col items-center justify-center p-10'>
-      <div className='md:w-[80%] w-[90vw] rounded-3xl bg-black h-full py-2 gap-2'>
+      <div className='md:w-[80%] w-[90vw] rounded-3xl bg-[#0d0421] h-full py-2 gap-2'>
           <h1 className='text-3xl font-bold text-white text-center'>Best Sellers</h1>
           <p className='text-white font-light w-[100%] text-center'>Customer favorites loved for their bold flavors, perfect blends, and unbeatable taste — these are our top picks!</p>
         <div className='flex flex-col md:flex-row justify-center items-center gap-10'>

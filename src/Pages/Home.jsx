@@ -7,17 +7,21 @@ import PopularPicks from '../Components/PopularPicks'
 import Awards from '../Components/Awards'
 import Footer from '../Components/Footer'
 import Navbar from '../Components/Navbar'
+import Newlaunch from '../Components/Newlaunch'
+import HeroSection from '../Components/HeroSection'
 
 const Home = () => {
   return (
     <div className='bg-[#c8a2c8]'>
       <Navbar/>
-      <Hero/>
+      {/* <Hero/> */}
+      <HeroSection/>
       <BestSellers/>
       <Category/>
-      <VideoSection/>
+      <Newlaunch/>
+      {/* <VideoSection/> */}
       <PopularPicks/>
-      <Awards/>
+      {/* <Awards/> */}
       <Footer/>
     </div>
   )

@@ -1,128 +1,75 @@
-import React, { useState } from 'react';
-import { FaShoppingCart, FaSearch, FaUser } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
-import { RxHamburgerMenu } from "react-icons/rx";
-import { RxCross1 } from "react-icons/rx";
+import React, { useEffect, useState } from 'react';
+import { FaUser, FaShoppingCart } from 'react-icons/fa';
+import { MdKeyboardArrowDown } from "react-icons/md";
+import { useNavigate, Link } from 'react-router-dom';
+
+const categories = [
+  "10 Minutes Mix", "Bathing Essentials", "Best Sellers", "Cold Pressed Oils",
+  "Kitchen Utensils", "Malt", "Masala", "Noodles", "Pickles",
+  "Pooja & Devotional", "Special Combo", "Vadagam and Vathal"
+];
+
 const Navbar = () => {
   const navigate = useNavigate();
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  const toggleMenu = () => setMenuOpen(!menuOpen);
-  const handleNavigate = (path) => {
-    navigate(path);
-    setMenuOpen(false);
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10); // you can change 10 to any pixel threshold
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <nav
-      style={{ fontFamily: 'Urbanist, sans-serif' }}
-      className="w-full fixed top-0 left-0 bg-[#c8a2c8] shadow-md z-[100]"
-    >
-      <div className="max-w-[90vw] mx-auto flex items-center justify-between py-4 relative">
-        {/* Logo */}
-        <div className="flex items-center">
-          <img src="/logo.png" alt="Logo" className="w-16 h-16 object-contain" />
-        </div>
-
-        {/* Desktop nav links */}
-        <ul className="hidden md:flex items-center gap-8 text-black font-normal">
-          <li
-            onClick={() => handleNavigate('/')}
-            className="cursor-pointer hover:text-white text-base"
-          >
-            Home
-          </li>
-          <li
-            onClick={() => handleNavigate('/shop')}
-            className="cursor-pointer hover:text-white text-base flex items-center gap-1"
-          >
-            Shop
-          </li>
-          <li
-            onClick={() => handleNavigate('/contact')}
-            className="cursor-pointer hover:text-white text-base"
-          >
-            Contact
-          </li>
-        </ul>
-
-        {/* Desktop Search & Icons */}
-        <div className="hidden md:flex items-center gap-6">
-          <div className="flex items-center gap-2 border rounded-full px-4 py-2 text-sm text-gray-500 w-[240px]">
-            <FaSearch className="text-black" />
-            <input
-              type="text"
-              placeholder="I'm looking for..."
-              className="outline-none w-full bg-transparent"
-            />
-          </div>
-
-          <FaUser className="text-black text-xl cursor-pointer" />
-
-          <div className="relative cursor-pointer">
-            <FaShoppingCart className="text-black text-xl" />
-            <span className="absolute -top-2 -right-2 text-[10px] bg-red-600 text-white w-4 h-4 flex items-center justify-center rounded-full">
-              0
-            </span>
-          </div>
-        </div>
-
-        {/* Hamburger Icon for Mobile */}
-        <div
-          className="md:hidden text-black text-2xl cursor-pointer z-50"
-          onClick={toggleMenu}
-          aria-label="Toggle menu"
-        >
-          {menuOpen ? <RxCross1 /> : <RxHamburgerMenu />}
-        </div>
+    <nav className={`w-full fixed z-50 px-6 md:px-12 py-4 flex items-center font-light text-xl justify-between transition-all duration-300 
+      ${isScrolled ? 'bg-[#c8a2c8] shadow-md' : 'bg-transparent'}
+    `}>
+      {/* Logo */}
+      <div className="flex items-center">
+        <img
+          src="/logo.png"
+          alt="Logo"
+          className="h-12 w-12 object-contain rounded-full"
+        />
       </div>
 
-      {/* Mobile Menu Dropdown */}
-      {menuOpen && (
-        <div className="md:hidden bg-[#c8a2c8] shadow-lg absolute top-full left-0 w-full z-40 border-t border-gray-300">
-          <ul className="flex flex-col items-center gap-6 py-6 text-black font-normal">
-            <li
-              onClick={() => handleNavigate('/')}
-              className="cursor-pointer hover:text-white text-lg"
-            >
-              Home
-            </li>
-            <li
-              onClick={() => handleNavigate('/shop')}
-              className="cursor-pointer hover:text-white text-lg flex items-center gap-1"
-            >
-              Shop
-            </li>
-            <li
-              onClick={() => handleNavigate('/contact')}
-              className="cursor-pointer hover:text-white text-lg"
-            >
-              Contact
-            </li>
-          </ul>
+      {/* Nav Links */}
+      <div className="hidden md:flex gap-8 text-xl font-light text-black relative">
+        <Link to="/" className="hover:text-[#b3533b]">Home</Link>
 
-          <div className="flex flex-col items-center gap-4 px-6 pb-6">
-            <div className="flex items-center gap-2 border rounded-full px-4 py-2 text-sm text-gray-500 w-full">
-              <FaSearch className="text-black" />
-              <input
-                type="text"
-                placeholder="I'm looking for..."
-                className="outline-none w-full bg-transparent"
-              />
-            </div>
-
-            <div className="flex items-center gap-8 text-black">
-              <FaUser className="text-xl cursor-pointer" />
-              <div className="relative cursor-pointer">
-                <FaShoppingCart className="text-xl" />
-                <span className="absolute -top-2 -right-2 text-[10px] bg-red-600 text-white w-4 h-4 flex items-center justify-center rounded-full">
-                  0
-                </span>
-              </div>
-            </div>
+        {/* Dropdown Menu */}
+        <div className="relative group">
+          <button onClick={() => navigate('/shop')} className="hover:text-[#b3533b] flex items-center gap-1">
+            Shop <MdKeyboardArrowDown />
+          </button>
+          <div className="absolute hidden group-hover:block top-full left-0 bg-[#c8a2c8bd] shadow-xl rounded-md py-2 w-56 z-50 text-black">
+            {categories.map((cat, idx) => (
+              <Link
+                to={`/shop/`}
+                key={idx}
+                className="block px-4 py-2 text-lg hover:bg-white hover:text-[#e8bbe8] whitespace-nowrap"
+              >
+                {cat}
+              </Link>
+            ))}
           </div>
         </div>
-      )}
+
+        <Link to="/contact" className="hover:text-[#b3533b]">Contact</Link>
+      </div>
+
+      {/* Right Icons */}
+      <div className="flex items-center gap-6">
+        <FaUser className="text-black text-lg cursor-pointer" />
+        <div className="relative cursor-pointer">
+          <FaShoppingCart className="text-black text-lg" />
+          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
+            2
+          </span>
+        </div>
+      </div>
     </nav>
   );
 };

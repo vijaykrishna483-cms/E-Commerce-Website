@@ -26,7 +26,7 @@ const Category = () => {
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 mt-6">
         {images.map((img, idx) => (
-          <div key={idx} className="w-full overflow-hidden rounded-lg shadow-md">
+          <div key={idx} className="w-full overflow-hidden rounded-full shadow-md">
             <img
               src={img}
               alt={`Category ${idx + 1}`}
