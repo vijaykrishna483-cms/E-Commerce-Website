@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Category = () => {
   const images = [
@@ -15,7 +16,7 @@ const Category = () => {
     '/image 6.png',
     '/image 8.png',
   ];
-
+const navigate=useNavigate()
   return (
     <div className="min-h-screen bg-[#c8a2c8] flex flex-col items-center justify-center gap-6 p-6 sm:p-10 px-[5vw]">
       <h1 className="font-semibold text-3xl sm:text-4xl text-center">Category Highlights</h1>
@@ -29,6 +30,7 @@ const Category = () => {
           <div key={idx} className="w-full overflow-hidden rounded-full shadow-md">
             <img
               src={img}
+              onClick={()=>navigate('/shop')}
               alt={`Category ${idx + 1}`}
               className="w-full h-[160px] sm:h-[180px] md:h-[200px] object-cover hover:scale-105 transition-transform duration-300 ease-in-out"
             />

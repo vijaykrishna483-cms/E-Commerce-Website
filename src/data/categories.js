@@ -111,6 +111,10 @@ export const productsByCategory = {
 };
 
 // src/data/categories.js
+
+
+
+
 export const categories = [
   "10 Minutes Mix",
   "Bathing Essentials",
